@@ -1103,8 +1103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 1701126341}
   audioClips:
-  - {fileID: 8300000, guid: 01429ba3200234e428a7c593d0a22973, type: 3}
   - {fileID: 8300000, guid: bb253b4d242d9074cb7acefe2051cf20, type: 3}
+  - {fileID: 0}
 --- !u!4 &2053381878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3551249638402207312, guid: fc33920c868183441857c6afa8b4a305, type: 3}
