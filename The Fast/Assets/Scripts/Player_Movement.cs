@@ -23,6 +23,8 @@ public class Player_Movement : MonoBehaviour
     private Vector2 dashingDirection;
     private bool isDashing;
     private bool canDash = false;
+
+    private Vector2 eventDirection;
     
     ///dash trail
     private TrailRenderer trailRenderer;
@@ -39,6 +41,8 @@ public class Player_Movement : MonoBehaviour
 
     //sounds
     public Player_Audio playSound;
+
+    // bounce
 
     ///Start
     private void Awake()
@@ -65,6 +69,7 @@ public class Player_Movement : MonoBehaviour
         walk(dir);
         jump();
         dash();
+        bounce();
         
     }
 
@@ -114,7 +119,7 @@ public class Player_Movement : MonoBehaviour
         animator.SetBool("isJumping", true);
         if (isDashing == false)
         {
-            playSound.Play(1);
+            //playSound.Play(1);
         }
     }
 
@@ -147,6 +152,17 @@ public class Player_Movement : MonoBehaviour
             canDash = true;
         }
     }
+
+    private void bounce(){
+        if(isDashing)
+        {
+            if(isGrounded){
+            }
+            //if hits a wall or ground
+            
+        }
+    }
+
     private IEnumerator StopDashing()
     {
         yield return new WaitForSeconds(dashingTime);
@@ -172,6 +188,12 @@ public class Player_Movement : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    void onTriggerEnter2d(Collider2D other)
+    {
+        Debug.Log("hit registered");
+
     }
 
 }
