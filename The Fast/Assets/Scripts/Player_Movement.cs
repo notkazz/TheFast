@@ -24,6 +24,9 @@ public class Player_Movement : MonoBehaviour
     private bool isDashing;
     private bool canDash = false;
 
+    public float CooldownTime = 20;
+    private float nextDashTime = 0.0f;
+
     private Vector2 eventDirection;
     
     ///dash trail
@@ -127,9 +130,11 @@ public class Player_Movement : MonoBehaviour
     private void dash()
     {
         var dashInput = Input.GetButtonDown("Dash");
-        if (dashInput && canDash)
+        if (dashInput && canDash && (Time.time > nextDashTime))
         {
             isDashing = true;
+            nextDashTime = Time.time + CooldownTime;
+
             playSound.Play(0);
             canDash = false;
             trailRenderer.emitting = true;
@@ -139,6 +144,7 @@ public class Player_Movement : MonoBehaviour
                 dashingDirection = new Vector2(transform.localScale.x, 0);
             }
             StartCoroutine(StopDashing());
+            StartCoroutine(Cooldown());
         }
 
         if (isDashing)
@@ -168,6 +174,12 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         trailRenderer.emitting = false;
         isDashing = false;
+    }
+
+    private IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(CooldownTime);
+       
     }
 
     protected virtual void Flip()
