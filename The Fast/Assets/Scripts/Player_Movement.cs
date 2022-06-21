@@ -25,7 +25,9 @@ public class Player_Movement : MonoBehaviour
     private bool canDash = false;
 
     public float CooldownTime = 20;
-    private float nextDashTime = 0.0f;
+    private float nextDashTime1 = 0.0f;
+    private float nextDashTime2 = 0.0f;
+    private float nextDashTime3 = 0.0f;
 
     private Vector2 eventDirection;
     
@@ -130,10 +132,42 @@ public class Player_Movement : MonoBehaviour
     private void dash()
     {
         var dashInput = Input.GetButtonDown("Dash");
-        if (dashInput && canDash && (Time.time > nextDashTime))
+        if (dashInput && canDash && (Time.time > nextDashTime1))
         {
             isDashing = true;
-            nextDashTime = Time.time + CooldownTime;
+            nextDashTime1 = Time.time + CooldownTime;
+
+            playSound.Play(0);
+            canDash = false;
+            trailRenderer.emitting = true;
+            dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            if (dashingDirection == Vector2.zero)
+            {
+                dashingDirection = new Vector2(transform.localScale.x, 0);
+            }
+            StartCoroutine(StopDashing());
+            StartCoroutine(Cooldown());
+        }
+        else if (dashInput && canDash && (Time.time > nextDashTime2))
+        {
+            isDashing = true;
+            nextDashTime2 = Time.time + CooldownTime;
+
+            playSound.Play(0);
+            canDash = false;
+            trailRenderer.emitting = true;
+            dashingDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            if (dashingDirection == Vector2.zero)
+            {
+                dashingDirection = new Vector2(transform.localScale.x, 0);
+            }
+            StartCoroutine(StopDashing());
+            StartCoroutine(Cooldown());
+        }
+        else if (dashInput && canDash && (Time.time > nextDashTime3))
+        {
+            isDashing = true;
+            nextDashTime3 = Time.time + CooldownTime;
 
             playSound.Play(0);
             canDash = false;
